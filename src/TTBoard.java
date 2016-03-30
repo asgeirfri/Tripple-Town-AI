@@ -10,6 +10,8 @@ public class TTBoard {
 	public int holding;
 	public int points;
 	
+	
+	// initialize the board
 	public void init() {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
@@ -22,6 +24,8 @@ public class TTBoard {
 		points = 0;
 		holding = 1;
 	}
+	
+	// show the board
 	public void show() {
 		System.out.println("Points: " + points + "\t" + "Stash: " + stash + "\t" + "Holding: " + holding);
 		for (int i = 0; i < 6; i++) {
@@ -32,12 +36,16 @@ public class TTBoard {
 			System.out.println("");
 		}
 	}
+	
+	// returns true if no more moves can be made
 	public boolean gameOver() {
 		if (freeSpaces.size() == 0) {
 			return true;
 		}
 		return false;
 	}
+	
+	// puts number where the user wants to put it, then updates the thing that the user holds
 	public void playerMove(Point move){
 		if (!freeSpaces.contains(move)) {
 			throw new RuntimeException();
@@ -53,6 +61,8 @@ public class TTBoard {
 		findFreeSpaces();
 		holding = findHolding();
 	}
+	
+	// moves bears and checks if they die
 	public void moveBears() {
 		Random rand = new Random();
 		for (int i = 0; i < bears.size(); i++) {
@@ -103,6 +113,95 @@ public class TTBoard {
 				}
 			}
 		}
+		killBears();
+	}
+	
+	//kills all bears that should be killed and unifies them
+	public void killBears () {
+		for (int i = bears.size() -1; i >= 0; i--) {
+			boolean kill = killBear(bears.get(i));
+			if (kill) {
+				unifyBears(bears.get(i));
+			}
+		}
+	}
+	
+	//kills bears that are trapped together
+	public boolean killBear(Point bear) {
+		if (bear.x + 1 < 6) {
+			Point temp = new Point(bear.x+1, bear.y);
+			if (board[temp.x][temp.y] == 0) {
+				return false;
+			}
+			if (board[temp.x][temp.y] == -1) {
+				board[bear.x][bear.y] = 1;
+				boolean shouldReturn = killBear(temp);
+				board[bear.x][bear.y] = -1;
+				if (shouldReturn == false) {
+					return false;
+				}
+			}
+		}
+		if (bear.x - 1 > -1) {
+			Point temp = new Point(bear.x-1, bear.y);
+			if (board[temp.x][temp.y] == 0) {
+				return false;
+			}
+			if (board[temp.x][temp.y] == -1) {
+				board[bear.x][bear.y] = 1;
+				boolean shouldReturn = killBear(temp);
+				board[bear.x][bear.y] = -1;
+				if (shouldReturn == false) {
+					return false;
+				}
+			}
+		}
+		if (bear.y + 1 < 6) {
+			Point temp = new Point(bear.x, bear.y+1);
+			if (board[temp.x][temp.y] == 0) {
+				return false;
+			}
+			if (board[temp.x][temp.y] == -1) {
+				board[bear.x][bear.y] = 1;
+				boolean shouldReturn = killBear(temp);
+				board[bear.x][bear.y] = -1;
+				if (shouldReturn == false) {
+					return false;
+				}
+			}
+		}
+		if (bear.y -1 > -1) {
+			Point temp = new Point(bear.x, bear.y-1);
+			if (board[temp.x][temp.y] == 0) {
+				return false;
+			}
+			if (board[temp.x][temp.y] == -1) {
+				board[bear.x][bear.y] = 1;
+				boolean shouldReturn = killBear(temp);
+				board[bear.x][bear.y] = -1;
+				if (shouldReturn == false) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	//unifies toobstones (-2) into churches (-3) and so on
+	public void unifyBears(Point move) {
+		ArrayList<Point> connections = countConnections(move);
+		if (connections.size() > 2) {
+			points += connections.size() * -board[move.x][move.y];
+			int newScore = board[move.x][move.y] - 1;
+			for (int i = 0; i < connections.size(); i++) {
+				Point temp = connections.get(i);
+				bears.remove(temp);
+				board[temp.x][temp.y] = 0;
+			}
+			board[move.x][move.y] = newScore;
+			findFreeSpaces();
+			unifyBears(move);
+		}
 	}
 	
 	//puts all free spaces in array
@@ -132,6 +231,8 @@ public class TTBoard {
 			unify(move);
 		}
 	}
+	
+	// counts the all spots conenctet to p that have the same value
 	public ArrayList<Point> countConnections(Point p) {
 		ArrayList<Point> connections = new ArrayList<Point>();
 		ArrayList<Point> unexplored = new ArrayList<Point>();
@@ -173,9 +274,10 @@ public class TTBoard {
 		return connections;
 	}
 	
+	// gets "random" thing to hold"
 	public int findHolding() {
 		Random rand = new Random();
-		int temp = rand.nextInt() % 100;
+		int temp = rand.nextInt(100);
 		if (temp < 66) {
 			return 1;
 		}
@@ -191,6 +293,17 @@ public class TTBoard {
 		else {
 			return 4;
 		}
+	}
+	
+	// stashes the value that the player is holding and holds the value that the player is stashing, if the values is 0, he gets a new value to hold
+	public void stash() {
+		int temp = holding;
+		if (stash != 0) {
+			holding = stash;
+		} else {
+			holding = findHolding();
+		}
+		stash = temp;
 	}
 }
 

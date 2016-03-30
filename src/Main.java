@@ -8,9 +8,19 @@ public class Main {
 		board.init();
 		board.show();
 		while (!board.gameOver()) {
-			Point move = agent.nextMove(board);
-			board.playerMove(move);
-			board.moveBears();
+			if (agent.stash()) {
+				board.stash();
+			}
+			else {
+				try {
+					Point move = agent.nextMove(board);
+					board.playerMove(move);
+					board.moveBears();
+				}
+				catch (RuntimeException e) {
+					System.out.println("Invalid move.");
+				}
+			}
 			System.out.println("------------------");
 			board.show();
 		}
