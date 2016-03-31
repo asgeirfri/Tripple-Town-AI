@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 public class StateMove {
 	TTBoard board;
-	Point firstMove;
+	ArrayList<Point> history;
 	
-	public StateMove(TTBoard b, Point p) {
+	public StateMove(TTBoard b, ArrayList<Point> list, Point p) {
 		board = new TTBoard();
 		board.board = new int[6][6];
 		for (int i = 0; i < 6; i++) {
@@ -19,6 +19,7 @@ public class StateMove {
 		board.stash = b.stash;
 		board.holding = b.holding;
 		board.points = b.points;
-		firstMove = new Point(p);
+		history = new ArrayList<Point>(list);
+		history.add(p);
 	}
 }
