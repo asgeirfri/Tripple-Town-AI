@@ -103,9 +103,11 @@ public class TripleTownUI extends JFrame {
 		String button55Point = "" + myboard.board[5][5];
 		button55.setText(button55Point);
 		
-		int holding = myboard.holding;
+		int hold = myboard.holding;
 		int score = myboard.points;
-		System.out.println("You're currently holding: " + holding);
+		holdingLabel.setText("Holding: " + hold);
+		scoreLabel.setText("Score: " + score);
+		System.out.println("You're currently holding: " + hold);
 		System.out.println("Your current score: " + score + "\n");
 	}
 	
@@ -241,6 +243,9 @@ public class TripleTownUI extends JFrame {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner Evaluation license - Bradley Chelsey
 		//buttonStash = new JButton();
+		
+		holdingLabel = new JLabel();
+		scoreLabel = new JLabel();
 		
 		button00 = new JButton();
 		button01 = new JButton();
@@ -586,6 +591,9 @@ public class TripleTownUI extends JFrame {
 					.addContainerGap()
 					.addGroup(contentPaneLayout.createParallelGroup()
 						.addGroup(contentPaneLayout.createSequentialGroup()
+							.addComponent(holdingLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+							.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE,80, GroupLayout.PREFERRED_SIZE))
+						.addGroup(contentPaneLayout.createSequentialGroup()
 							.addComponent(button00, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 							.addComponent(button01, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
@@ -664,6 +672,10 @@ public class TripleTownUI extends JFrame {
 				.addGroup(contentPaneLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(holdingLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap()
+					.addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(button00, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addComponent(button01, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addComponent(button02, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
@@ -720,6 +732,9 @@ public class TripleTownUI extends JFrame {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner Evaluation license - Bradley Chelsey
 	//private JButton buttonStash;
+	
+	private JLabel holdingLabel;
+	private JLabel scoreLabel;
 	
 	private JButton button00;
 	private JButton button01;
