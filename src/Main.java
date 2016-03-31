@@ -2,7 +2,14 @@ import java.awt.Point;
 
 public class Main {
 	
+	public static TripleTownUI board = new TripleTownUI();
+	
 	public static void main(String[] args){
+		if(board.isVisible() == false) {
+			board.setVisible(true);
+		}
+		
+		/*
 		TTAgent agent = new TTAgent();
 		TTBoard board = new TTBoard();
 		board.init();
@@ -23,6 +30,6 @@ public class Main {
 			}
 			System.out.println("------------------");
 			board.show();
-		}
+		}*/
 	}
 }
