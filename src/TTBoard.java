@@ -119,9 +119,10 @@ public class TTBoard {
 	//kills all bears that should be killed and unifies them
 	public void killBears () {
 		for (int i = bears.size() -1; i >= 0; i--) {
-			boolean kill = killBear(bears.get(i));
+			Point bear = bears.get(i);
+			boolean kill = killBear(bear);
 			if (kill) {
-				unifyBears(bears.get(i));
+				unifyBears(bear);
 			}
 		}
 	}
@@ -184,6 +185,8 @@ public class TTBoard {
 				}
 			}
 		}
+		bears.remove(bear);
+		board[bear.x][bear.y] = -2;
 		return true;
 	}
 	
