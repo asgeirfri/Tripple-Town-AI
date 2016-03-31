@@ -5,31 +5,32 @@ public class Main {
 	public static TripleTownUI board = new TripleTownUI();
 	
 	public static void main(String[] args){
-		if(board.isVisible() == false) {
+		/*if(board.isVisible() == false) {
 			board.setVisible(true);
-		}
+		}*/
 		
-		/*
+
 		TTAgent agent = new TTAgent();
 		TTBoard board = new TTBoard();
 		board.init();
 		board.show();
 		while (!board.gameOver()) {
-			if (agent.stash()) {
+			/*if (agent.stash()) {
 				board.stash();
 			}
-			else {
-				try {
-					Point move = agent.nextMove(board);
-					board.playerMove(move);
-					board.moveBears();
-				}
-				catch (RuntimeException e) {
-					System.out.println("Invalid move.");
-				}
+			else {*/
+			try {
+				Point move = agent.nextMove(board);
+				System.out.println("Making move " + move);
+				board.playerMove(move);
+				board.moveBears();
 			}
+			catch (RuntimeException e) {
+				System.out.println("Invalid move.\n" + e.getMessage());
+			}
+			//}
 			System.out.println("------------------");
 			board.show();
-		}*/
+		}
 	}
 }
