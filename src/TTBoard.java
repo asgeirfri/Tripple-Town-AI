@@ -16,6 +16,7 @@ public class TTBoard {
 	public void init() {
 		// initialize the board
 		  Random rand = new Random();
+		  bears = new ArrayList<Point>();
 		int max = 14;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
@@ -23,7 +24,12 @@ public class TTBoard {
 				int randomNum2 = rand.nextInt((3 - 1)) + 1;
 				if(max != 0 && randomNum2 == 1)
 				{
-					board[i][j] = findHolding();
+					int temp = findHolding();
+					if(temp == -1)
+					{
+						bears.add(new Point(i, j));
+					}
+					board[i][j] = temp;
 					max--;
 				}
 				else
@@ -32,7 +38,7 @@ public class TTBoard {
 				}
 			}
 		}
-		bears = new ArrayList<Point>();
+		
 		findFreeSpaces();
 		stash = 0;
 		points = 0;
