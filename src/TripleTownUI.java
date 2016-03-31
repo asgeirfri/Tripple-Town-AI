@@ -109,478 +109,132 @@ public class TripleTownUI extends JFrame {
 		System.out.println("Your current score: " + score + "\n");
 	}
 	
-	private void button00ActionPerformed(ActionEvent e) {
+	private void play(int x, int y, JButton button) {
 		try {
-			Point move = new Point(0,0);
+			Point move = new Point(x,y);
 			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][0];
+			String temp = "" + myboard.board[x][y];
 			myboard.moveBears();
-			button00.setText(temp);
+			button.setText(temp);
 		}
 		catch (RuntimeException r) {
 			System.out.println("Invalid move.");
 		}
 		updateButtons();
+	}
+	
+	private void button00ActionPerformed(ActionEvent e) {
+		play(0,0,button00);
 	}
 	private void button01ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(0,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][1];
-			myboard.moveBears();
-			button01.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(0,1,button01);
 	}
 	private void button02ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(0,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][2];
-			myboard.moveBears();
-			button02.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(0,2,button02);
 	}
 	private void button03ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(0,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][3];
-			myboard.moveBears();
-			button03.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(0,3,button03);
 	}
 	private void button04ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(0,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][4];
-			myboard.moveBears();
-			button04.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(0,4,button04);
 	}
 	private void button05ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(0,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[0][5];
-			myboard.moveBears();
-			button05.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(0,5,button05);
 	}
 	
 	private void button10ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,0);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][0];
-			myboard.moveBears();
-			button10.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,0,button10);
 	}
 	private void button11ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][1];
-			myboard.moveBears();
-			button11.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,1,button11);
 	}
 	private void button12ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][2];
-			myboard.moveBears();
-			button12.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,2,button12);
 	}
 	private void button13ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][3];
-			myboard.moveBears();
-			button13.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,3,button13);
 	}
 	private void button14ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][4];
-			myboard.moveBears();
-			button14.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,4,button14);
 	}
 	private void button15ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(1,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[1][5];
-			myboard.moveBears();
-			button15.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(1,5,button15);
 	}
 	
 	private void button20ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,0);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][0];
-			myboard.moveBears();
-			button20.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,0,button20);
 	}
 	private void button21ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][1];
-			myboard.moveBears();
-			button21.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,1,button21);
 	}
 	private void button22ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][2];
-			myboard.moveBears();
-			button22.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,2,button22);
 	}
 	private void button23ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][3];
-			myboard.moveBears();
-			button23.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,3,button23);
 	}
 	private void button24ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][4];
-			myboard.moveBears();
-			button24.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,4,button24);
 	}
 	private void button25ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(2,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[2][5];
-			myboard.moveBears();
-			button25.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(2,5,button25);
 	}
 	
 	private void button30ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,0);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][0];
-			myboard.moveBears();
-			button30.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,0,button30);
 	}
 	private void button31ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][1];
-			myboard.moveBears();
-			button31.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,1,button31);
 	}
 	private void button32ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][2];
-			myboard.moveBears();
-			button32.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,2,button32);
 	}
 	private void button33ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][3];
-			myboard.moveBears();
-			button33.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,3,button33);
 	}
 	private void button34ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][4];
-			myboard.moveBears();
-			button34.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,4,button34);
 	}
 	private void button35ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(3,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[3][5];
-			myboard.moveBears();
-			button35.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(3,5,button35);
 	}
 	
 	private void button40ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,0);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][0];
-			myboard.moveBears();
-			button40.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,0,button40);
 	}
 	private void button41ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][1];
-			myboard.moveBears();
-			button41.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,1,button41);
 	}
 	private void button42ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][2];
-			myboard.moveBears();
-			button42.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,2,button42);
 	}
 	private void button43ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][3];
-			myboard.moveBears();
-			button43.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,3,button43);
 	}
 	private void button44ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][4];
-			myboard.moveBears();
-			button44.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,4,button44);
 	}
 	private void button45ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(4,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[4][5];
-			myboard.moveBears();
-			button45.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(4,5,button45);
 	}
 	
 	private void button50ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,0);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][0];
-			myboard.moveBears();
-			button50.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,0,button50);
 	}
 	private void button51ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,1);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][1];
-			myboard.moveBears();
-			button51.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,1,button51);
 	}
 	private void button52ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,2);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][2];
-			myboard.moveBears();
-			button52.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,2,button52);
 	}
 	private void button53ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,3);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][3];
-			myboard.moveBears();
-			button53.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,3,button53);
 	}
 	private void button54ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,4);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][4];
-			myboard.moveBears();
-			button51.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,4,button54);
 	}
 	private void button55ActionPerformed(ActionEvent e) {
-		try {
-			Point move = new Point(5,5);
-			myboard.playerMove(move);
-			String temp = "" + myboard.board[5][5];
-			myboard.moveBears();
-			button55.setText(temp);
-		}
-		catch (RuntimeException r) {
-			System.out.println("Invalid move.");
-		}
-		updateButtons();
+		play(5,5,button55);
 	}
 
 	private void initComponents() {
