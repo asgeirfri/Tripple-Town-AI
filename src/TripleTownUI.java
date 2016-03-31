@@ -106,7 +106,7 @@ public class TripleTownUI extends JFrame {
 		int holding = myboard.holding;
 		int score = myboard.points;
 		System.out.println("You're currently holding: " + holding);
-		System.out.println("Your current score: " + score);
+		System.out.println("Your current score: " + score + "\n");
 	}
 	
 	private void button00ActionPerformed(ActionEvent e) {
