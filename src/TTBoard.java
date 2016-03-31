@@ -11,11 +11,25 @@ public class TTBoard {
 	public int points;
 	
 	
-	// initialize the board
+	
+	  
 	public void init() {
+		// initialize the board
+		  Random rand = new Random();
+		int max = 14;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
-				board[i][j] = 0;
+				
+				int randomNum2 = rand.nextInt((3 - 1)) + 1;
+				if(max != 0 && randomNum2 == 1)
+				{
+					board[i][j] = findHolding();
+					max--;
+				}
+				else
+				{
+					board[i][j] = 0;
+				}
 			}
 		}
 		bears = new ArrayList<Point>();
@@ -24,6 +38,8 @@ public class TTBoard {
 		points = 0;
 		holding = 1;
 	}
+	
+	
 	
 	// show the board
 	public void show() {
