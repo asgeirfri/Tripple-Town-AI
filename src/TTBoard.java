@@ -12,25 +12,21 @@ public class TTBoard {
 	  
 	public void init() {
 		// initialize the board
-		  Random rand = new Random();
-		  bears = new ArrayList<Point>();
+		Random rand = new Random();
+		bears = new ArrayList<Point>();
 		int max = 14;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
-				
 				int randomNum2 = rand.nextInt((4 - 1));
-				if(max != 0 && randomNum2 == 1)
-				{
+				if(max != 0 && randomNum2 == 1) {
 					int temp = initializationObject();
-					if(temp == -1)
-					{
+					if(temp == -1) {
 						bears.add(new Point(i, j));
 					}
 					board[i][j] = temp;
 					max--;
 				}
-				else
-				{
+				else {
 					board[i][j] = 0;
 				}
 			}
