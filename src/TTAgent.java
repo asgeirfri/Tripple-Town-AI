@@ -1,9 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-
-import edu.princeton.cs.algs4.Stopwatch;
 
 public class TTAgent {
 	int time = 0;
@@ -31,7 +28,7 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			
 			int index = board.freeSpaces.indexOf(p);
-			
+
 			for (int i = 0; i < 100; i++) {
 				PredictionStats stat = stats.get(index);
 				int simulateScore = completeGameWithMove(p, board);

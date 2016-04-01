@@ -1,8 +1,9 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
 /*
  * Created by JFormDesigner on Thu Dec 08 14:16:42 EST 2011
  */
@@ -24,88 +25,107 @@ public class TripleTownUI extends JFrame {
 		// TODO add your code here
 	}*/
 	
+	private String whichImage(int n) {
+		if(n == 1) {
+			return "/img/grass.png";
+		}
+		if(n == 2) {
+			return "/img/bush.png";
+		}
+		if(n == 3) {
+			return "/img/tree.png";
+		}
+		if(n == 4) {
+			return "/img/house1.png";
+		}
+		if(n == 5) {
+			return "/img/house2.png";
+		}
+		if(n == 6) {
+			return "/img/house3.png";
+		}
+		if(n == 7) {
+			return "/img/house4.png";
+		}
+		if(n == 8) {
+			return "/img/house5.png";
+		}
+		
+		if(n == -1) {
+			return "/img/bear.png";
+		}
+		if(n == -2) {
+			return "/img/grave.png";
+		}
+		if(n == -3) {
+			return "/img/church.png";
+		}
+		if(n == -4) {
+			return "/img/cathedral.png";
+		}
+		if(n == -5) {
+			return "/img/asgeir.png";
+		}
+		return "";
+	}
+	
+	private Image scaleImg(int n) {
+		String imgPath = whichImage(n);
+		Image img = new ImageIcon(getClass().getResource(imgPath)).getImage();
+		Image newImg = img.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		return newImg;
+	}
+	
 	private void updateButtons() {
-		String button00Point = "" + myboard.board[0][0];
-		button00.setText(button00Point);
-		String button01Point = "" + myboard.board[0][1];
-		button01.setText(button01Point);
-		String button02Point = "" + myboard.board[0][2];
-		button02.setText(button02Point);
-		String button03Point = "" + myboard.board[0][3];
-		button03.setText(button03Point);
-		String button04Point = "" + myboard.board[0][4];
-		button04.setText(button04Point);
-		String button05Point = "" + myboard.board[0][5];
-		button05.setText(button05Point);
+		button00.setIcon(new ImageIcon(scaleImg(myboard.board[0][0])));
+		button01.setIcon(new ImageIcon(scaleImg(myboard.board[0][1])));
+		button02.setIcon(new ImageIcon(scaleImg(myboard.board[0][2])));
+		button03.setIcon(new ImageIcon(scaleImg(myboard.board[0][3])));
+		button04.setIcon(new ImageIcon(scaleImg(myboard.board[0][4])));
+		button05.setIcon(new ImageIcon(scaleImg(myboard.board[0][5])));
 		
-		String button10Point = "" + myboard.board[1][0];
-		button10.setText(button10Point);
-		String button11Point = "" + myboard.board[1][1];
-		button11.setText(button11Point);
-		String button12Point = "" + myboard.board[1][2];
-		button12.setText(button12Point);
-		String button13Point = "" + myboard.board[1][3];
-		button13.setText(button13Point);
-		String button14Point = "" + myboard.board[1][4];
-		button14.setText(button14Point);
-		String button15Point = "" + myboard.board[1][5];
-		button15.setText(button15Point);
+		button10.setIcon(new ImageIcon(scaleImg(myboard.board[1][0])));
+		button11.setIcon(new ImageIcon(scaleImg(myboard.board[1][1])));
+		button12.setIcon(new ImageIcon(scaleImg(myboard.board[1][2])));
+		button13.setIcon(new ImageIcon(scaleImg(myboard.board[1][3])));
+		button14.setIcon(new ImageIcon(scaleImg(myboard.board[1][4])));
+		button15.setIcon(new ImageIcon(scaleImg(myboard.board[1][5])));
 		
-		String button20Point = "" + myboard.board[2][0];
-		button20.setText(button20Point);
-		String button21Point = "" + myboard.board[2][1];
-		button21.setText(button21Point);
-		String button22Point = "" + myboard.board[2][2];
-		button22.setText(button22Point);
-		String button23Point = "" + myboard.board[2][3];
-		button23.setText(button23Point);
-		String button24Point = "" + myboard.board[2][4];
-		button24.setText(button24Point);
-		String button25Point = "" + myboard.board[2][5];
-		button25.setText(button25Point);
+		button20.setIcon(new ImageIcon(scaleImg(myboard.board[2][0])));
+		button21.setIcon(new ImageIcon(scaleImg(myboard.board[2][1])));
+		button22.setIcon(new ImageIcon(scaleImg(myboard.board[2][2])));
+		button23.setIcon(new ImageIcon(scaleImg(myboard.board[2][3])));
+		button24.setIcon(new ImageIcon(scaleImg(myboard.board[2][4])));
+		button25.setIcon(new ImageIcon(scaleImg(myboard.board[2][5])));
+
+		button30.setIcon(new ImageIcon(scaleImg(myboard.board[3][0])));
+		button31.setIcon(new ImageIcon(scaleImg(myboard.board[3][1])));
+		button32.setIcon(new ImageIcon(scaleImg(myboard.board[3][2])));
+		button33.setIcon(new ImageIcon(scaleImg(myboard.board[3][3])));
+		button34.setIcon(new ImageIcon(scaleImg(myboard.board[3][4])));
+		button35.setIcon(new ImageIcon(scaleImg(myboard.board[3][5])));
 		
-		String button30Point = "" + myboard.board[3][0];
-		button30.setText(button30Point);
-		String button31Point = "" + myboard.board[3][1];
-		button31.setText(button31Point);
-		String button32Point = "" + myboard.board[3][2];
-		button32.setText(button32Point);
-		String button33Point = "" + myboard.board[3][3];
-		button33.setText(button33Point);
-		String button34Point = "" + myboard.board[3][4];
-		button34.setText(button34Point);
-		String button35Point = "" + myboard.board[3][5];
-		button35.setText(button35Point);
+		button40.setIcon(new ImageIcon(scaleImg(myboard.board[4][0])));
+		button41.setIcon(new ImageIcon(scaleImg(myboard.board[4][1])));
+		button42.setIcon(new ImageIcon(scaleImg(myboard.board[4][2])));
+		button43.setIcon(new ImageIcon(scaleImg(myboard.board[4][3])));
+		button44.setIcon(new ImageIcon(scaleImg(myboard.board[4][4])));
+		button45.setIcon(new ImageIcon(scaleImg(myboard.board[4][5])));
 		
-		String button40Point = "" + myboard.board[4][0];
-		button40.setText(button40Point);
-		String button41Point = "" + myboard.board[4][1];
-		button41.setText(button41Point);
-		String button42Point = "" + myboard.board[4][2];
-		button42.setText(button42Point);
-		String button43Point = "" + myboard.board[4][3];
-		button43.setText(button43Point);
-		String button44Point = "" + myboard.board[4][4];
-		button44.setText(button44Point);
-		String button45Point = "" + myboard.board[4][5];
-		button45.setText(button45Point);
-		
-		String button50Point = "" + myboard.board[5][0];
-		button50.setText(button50Point);
-		String button51Point = "" + myboard.board[5][1];
-		button51.setText(button51Point);
-		String button52Point = "" + myboard.board[5][2];
-		button52.setText(button52Point);
-		String button53Point = "" + myboard.board[5][3];
-		button53.setText(button53Point);
-		String button54Point = "" + myboard.board[5][4];
-		button54.setText(button54Point);
-		String button55Point = "" + myboard.board[5][5];
-		button55.setText(button55Point);
+		button50.setIcon(new ImageIcon(scaleImg(myboard.board[5][0])));
+		button51.setIcon(new ImageIcon(scaleImg(myboard.board[5][1])));
+		button52.setIcon(new ImageIcon(scaleImg(myboard.board[5][2])));
+		button53.setIcon(new ImageIcon(scaleImg(myboard.board[5][3])));
+		button54.setIcon(new ImageIcon(scaleImg(myboard.board[5][4])));
+		button55.setIcon(new ImageIcon(scaleImg(myboard.board[5][5])));
 		
 		int hold = myboard.holding;
+		String imgPath = whichImage(hold);
+		Image holdingImg = new ImageIcon(getClass().getResource(imgPath)).getImage();
+		Image newImg = holdingImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		holdingLabel.setIcon(new ImageIcon(newImg));
+		
 		int score = myboard.points;
-		holdingLabel.setText("Holding: " + hold);
 		scoreLabel.setText("Score: " + score);
 		System.out.println("You're currently holding: " + hold);
 		System.out.println("Your current score: " + score + "\n");
@@ -115,9 +135,7 @@ public class TripleTownUI extends JFrame {
 		try {
 			Point move = new Point(x,y);
 			myboard.playerMove(move);
-			String temp = "" + myboard.board[x][y];
 			myboard.moveBears();
-			button.setText(temp);
 		}
 		catch (RuntimeException r) {
 			System.out.println("Invalid move.");
@@ -244,7 +262,12 @@ public class TripleTownUI extends JFrame {
 		// Generated using JFormDesigner Evaluation license - Bradley Chelsey
 		//buttonStash = new JButton();
 		
-		holdingLabel = new JLabel();
+		int hold = myboard.holding;
+		String imgPath = whichImage(hold);
+		Image holdingImg = new ImageIcon(getClass().getResource(imgPath)).getImage();
+		Image newImg = holdingImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		holdingLabel = new JLabel("Holding", new ImageIcon(newImg), JLabel.LEFT);
+		holdingLabel.setHorizontalTextPosition(JLabel.LEFT);
 		scoreLabel = new JLabel();
 		
 		button00 = new JButton();
@@ -290,7 +313,7 @@ public class TripleTownUI extends JFrame {
 		button55 = new JButton();
 
 		//======== this ========
-		setTitle("Tic Tac Toe");
+		setTitle("Triple Town");
 		Container contentPane = getContentPane();
 
 		//---- button00 ----

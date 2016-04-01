@@ -2,14 +2,15 @@ import java.awt.Point;
 
 public class Main {
 	
-	//public static TripleTownUI board = new TripleTownUI();
+	public static TripleTownUI board = new TripleTownUI();
 	
 	public static void main(String[] args){
-		/*if(board.isVisible() == false) {
-			board.setVisible(true);
-		}*/
-		
+		HumanGame();
+		//AIGame();
 
+	}
+	
+	public static void AIGame() {
 		TTAgent agent = new TTAgent();
 		TTBoard board = new TTBoard();
 		board.init();
@@ -32,6 +33,11 @@ public class Main {
 			System.out.println("------------------");
 			board.show();
 			
+		}
+	}
+	public static void HumanGame() {
+		if(board.isVisible() == false) {
+			board.setVisible(true);
 		}
 	}
 }
