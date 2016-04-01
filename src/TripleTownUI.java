@@ -15,6 +15,7 @@ import javax.swing.*;
  */
 public class TripleTownUI extends JFrame {
 	TTBoard myboard = new TTBoard();
+	TTAgent agent = new TTAgent();
 	
 	public TripleTownUI() {
 		myboard.init();
@@ -131,7 +132,7 @@ public class TripleTownUI extends JFrame {
 		System.out.println("Your current score: " + score + "\n");
 	}
 	
-	private void play(int x, int y, JButton button) {
+	private void humanPlay(int x, int y, JButton button) {
 		try {
 			Point move = new Point(x,y);
 			myboard.playerMove(move);
@@ -141,6 +142,42 @@ public class TripleTownUI extends JFrame {
 			System.out.println("Invalid move.");
 		}
 		updateButtons();
+	}
+	
+	private void agentPlay() {
+		
+		// ------------------
+		//  AI Search Method Trigger
+		// ------------------
+		int ai = 0;
+		//while (!myboard.gameOver()) {
+			/*if (agent.stash()) {
+				board.stash();
+			}
+			else {*/
+			try {
+				Point move;
+				if(ai == 0){
+					move = agent.nextMoveBrute(myboard);
+				} else {
+
+					move = agent.nextMoveUDB(myboard);
+				}
+				System.out.println("Making move " + move);
+				myboard.playerMove(move);
+				myboard.moveBears();
+				
+			}
+			catch (RuntimeException e) {
+				System.out.println("Invalid move.");
+			}
+			//}
+			updateButtons();
+		//}
+	}
+	
+	private void play(int x, int y, JButton button) {
+		humanPlay(x, y, button);
 	}
 	
 	private void button00ActionPerformed(ActionEvent e) {
@@ -161,7 +198,6 @@ public class TripleTownUI extends JFrame {
 	private void button05ActionPerformed(ActionEvent e) {
 		play(0,5,button05);
 	}
-	
 	private void button10ActionPerformed(ActionEvent e) {
 		play(1,0,button10);
 	}
@@ -256,12 +292,15 @@ public class TripleTownUI extends JFrame {
 	private void button55ActionPerformed(ActionEvent e) {
 		play(5,5,button55);
 	}
+	
+	private void StartButtonActionPerformed(ActionEvent e) {
+		agentPlay();
+	}
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner Evaluation license - Bradley Chelsey
 		//buttonStash = new JButton();
-		
 		int hold = myboard.holding;
 		String imgPath = whichImage(hold);
 		Image holdingImg = new ImageIcon(getClass().getResource(imgPath)).getImage();
@@ -269,6 +308,7 @@ public class TripleTownUI extends JFrame {
 		holdingLabel = new JLabel("Holding", new ImageIcon(newImg), JLabel.LEFT);
 		holdingLabel.setHorizontalTextPosition(JLabel.LEFT);
 		scoreLabel = new JLabel();
+		StartButton = new JButton();
 		
 		button00 = new JButton();
 		button01 = new JButton();
@@ -604,6 +644,14 @@ public class TripleTownUI extends JFrame {
 			}
 		});
 		
+		//---- StartButton ----
+		StartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				StartButtonActionPerformed(e);
+			}
+		});
+		
 		updateButtons();
 		
 		GroupLayout contentPaneLayout = new GroupLayout(contentPane);
@@ -758,6 +806,7 @@ public class TripleTownUI extends JFrame {
 	
 	private JLabel holdingLabel;
 	private JLabel scoreLabel;
+	public JButton StartButton;
 	
 	private JButton button00;
 	private JButton button01;
