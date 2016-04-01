@@ -32,7 +32,7 @@ public class TTAgent {
 			
 			int index = board.freeSpaces.indexOf(p);
 			
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 1000; i++) {
 				int score = scores.get(index);
 				int simulateScore = completeGameWithMove(p, board);
 				scores.set(index, score + simulateScore);
@@ -66,6 +66,8 @@ public class TTAgent {
 		gameSimulation.stash = b.stash;
 		gameSimulation.holding = b.holding;
 		gameSimulation.points = b.points;
+		gameSimulation.playerMove(p);
+		gameSimulation.moveBears();
 		// Complete mock game
 		while (!gameSimulation.gameOver()) {
 			// get a random move from freeSpaces

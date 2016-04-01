@@ -220,7 +220,7 @@ public class TTBoard {
 	public void unifyBears(Point move) {
 		ArrayList<Point> connections = countConnections(move);
 		if (board[move.x][move.y] == -1) {
-			points += connections.size() * -board[move.x][move.y];
+			points += connections.size() * ((-board[move.x][move.y])*(-board[move.x][move.y]));
 			for (Point p : connections) {
 				board[p.x][p.y] = -2;
 				bears.remove(p);
@@ -229,7 +229,7 @@ public class TTBoard {
 			return;
 		}
 		if (connections.size() > 2) {
-			points += connections.size() * -board[move.x][move.y];
+			points += connections.size() * (-board[move.x][move.y])* (-board[move.x][move.y]);
 			int newScore = board[move.x][move.y] - 1;
 			for (int i = 0; i < connections.size(); i++) {
 				Point temp = connections.get(i);
@@ -258,7 +258,7 @@ public class TTBoard {
 	public void unify(Point move) {
 		ArrayList<Point> connections = countConnections(move);
 		if (connections.size() > 2) {
-			points += connections.size() * board[move.x][move.y];
+			points += connections.size() * board[move.x][move.y]*board[move.x][move.y];
 			int newScore = board[move.x][move.y] + 1;
 			for (int i = 0; i < connections.size(); i++) {
 				Point temp = connections.get(i);
