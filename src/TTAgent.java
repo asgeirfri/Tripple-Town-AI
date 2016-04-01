@@ -32,7 +32,7 @@ public class TTAgent {
 			
 			int index = board.freeSpaces.indexOf(p);
 			
-			for (int i = 0; i < 1000; i++) {
+			for (int i = 0; i < 2000; i++) {
 				int score = scores.get(index);
 				int simulateScore = completeGameWithMove(p, board);
 				scores.set(index, score + simulateScore);

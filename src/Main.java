@@ -5,12 +5,13 @@ public class Main {
 	public static TripleTownUI board = new TripleTownUI();
 	
 	public static void main(String[] args){
-		if(board.isVisible() == false) {
-			board.setVisible(true);
-		}
-		
+		HumanGame();
+		//AIGame();
 
-		/*TTAgent agent = new TTAgent();
+	}
+	
+	public static void AIGame() {
+		TTAgent agent = new TTAgent();
 		TTBoard board = new TTBoard();
 		board.init();
 		board.show();
@@ -19,7 +20,7 @@ public class Main {
 				board.stash();
 			}
 			else {*/
-			/*try {
+			try {
 				Point move = agent.nextMove(board);
 				System.out.println("Making move " + move);
 				board.playerMove(move);
@@ -32,6 +33,11 @@ public class Main {
 			System.out.println("------------------");
 			board.show();
 			
-		}*/
+		}
+	}
+	public static void HumanGame() {
+		if(board.isVisible() == false) {
+			board.setVisible(true);
+		}
 	}
 }
