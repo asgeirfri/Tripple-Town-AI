@@ -29,10 +29,10 @@ public class TTAgent {
 		// Run Predictions
 		for (Point p : board.freeSpaces) {
 			// This Code Is Run For Each Possible Move
-			
 			int index = board.freeSpaces.indexOf(p);
-			
-			for (int i = 0; i < 2000; i++) {
+			// We divide 50000 iterations between all possible moves
+			int maxIterations = 50000 / board.freeSpaces.size();
+			for (int i = 0; i < maxIterations; i++) {
 				int score = scores.get(index);
 				int simulateScore = completeGameWithMove(p, board);
 				scores.set(index, score + simulateScore);
