@@ -16,38 +16,84 @@ public class TTAgent {
 	
 	public Point nextMove(TTBoard board) {
 		
-		
-		int maxScore = 0;
+		// Stat Tracking
+		int totalRuns = 0;
 		Point move = new Point(0,0);
 		
 		// Tracking Scores For Each Possible Play
-		ArrayList<Integer> scores = new ArrayList<Integer>();
+		ArrayList<PredictionStats> stats = new ArrayList<PredictionStats>();
 		for (Point p : board.freeSpaces) {
-			scores.add(0);
+			stats.add(new PredictionStats(0, 0));
 		}
 		
-		// Run Predictions
+		// Run Initial 100 Plays
 		for (Point p : board.freeSpaces) {
 			// This Code Is Run For Each Possible Move
 			
 			int index = board.freeSpaces.indexOf(p);
 			
 			for (int i = 0; i < 100; i++) {
-				int score = scores.get(index);
+				PredictionStats stat = stats.get(index);
 				int simulateScore = completeGameWithMove(p, board);
-				scores.set(index, score + simulateScore);
+				stat.combinedScore += simulateScore;
+				stat.runs += 1;
+				totalRuns += 1;
+				stats.set(index, stat);
+			}
+			
+		}
+		
+		
+		
+		// UDB1 Equation Without Discount(Sigmoid) Function
+		
+		// Pre-generate Equation Values For All Possible Plays
+		// So We Dont Generate New Values For All  Plays Each Cycle
+		for(PredictionStats s : stats){
+			s.values = UDB1.calculate(s, totalRuns);
+		}
+		
+		
+		for(int i = 0; i < 45000; i++){
+			
+			
+			// Determine The Highest UDB1 Score
+			double max = 0;
+			int maxIndex = -1;
+			for(int j = 0; j < stats.size(); j++){
+				if(max < stats.get(j).values.high){
+					max = stats.get(j).values.high;
+					maxIndex = j;
+				}
+			}
+			
+			PredictionStats stat = stats.get(maxIndex);
+			Point p = board.freeSpaces.get(maxIndex);
+			int simulateScore = completeGameWithMove(p, board);
+			stat.combinedScore += simulateScore;
+			stat.runs += 1;
+			totalRuns += 1;
+			stat.values = UDB1.calculate(stat, totalRuns);
+			stats.set(maxIndex, stat);
+		}
+		
+		// Print Statistics For Initial Plays
+		for (Point p: board.freeSpaces){
+			int i = board.freeSpaces.indexOf(p);
+			System.out.println("Score For Option: " + i);
+			System.out.println("Runs: " + stats.get(i).runs);
+			//System.out.println("Score: " + stats.get(i).combinedScore);
+			System.out.println("Average: " + stats.get(i).averageScore());
+			//System.out.println("UDB - High: " + stats.get(i).values.high + " Low : " + stats.get(i).values.low);
+		}
+		int max = 0;
+		for(int i = 0; i < stats.size(); i++){
+			if(max < stats.get(i).averageScore()){
+				max = i;
 			}
 		}
 		
-		// Select Move Based On Predictions
-		for (int i = 0; i < scores.size(); i++) {
-			int score = scores.get(i);
-			if (score > maxScore) {
-				maxScore = score;
-				move = board.freeSpaces.get(i);
-			}
-		}
-		return move;
+		return board.freeSpaces.get(max);
 	}
 	
 	public int completeGameWithMove(Point p, TTBoard b) {
@@ -66,6 +112,8 @@ public class TTAgent {
 		gameSimulation.stash = b.stash;
 		gameSimulation.holding = b.holding;
 		gameSimulation.points = b.points;
+		gameSimulation.playerMove(p);
+		gameSimulation.moveBears();
 		// Complete mock game
 		while (!gameSimulation.gameOver()) {
 			// get a random move from freeSpaces

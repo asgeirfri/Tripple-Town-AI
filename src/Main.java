@@ -19,15 +19,15 @@ public class Main {
 				board.stash();
 			}
 			else {*/
-			try {
+			//try {
 				Point move = agent.nextMove(board);
 				System.out.println("Making move " + move);
 				board.playerMove(move);
 				board.moveBears();
-			}
-			catch (RuntimeException e) {
-				System.out.println("Invalid move.\n" + e.getMessage());
-			}
+			//}
+			//catch (RuntimeException e) {
+				//System.out.println("Invalid move.\n" + e.getMessage());
+			//}
 			//}
 			System.out.println("------------------");
 			board.show();
