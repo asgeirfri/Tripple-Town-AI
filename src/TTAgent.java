@@ -15,7 +15,6 @@ public class TTAgent {
 	}
 	
 	public Point nextMove(TTBoard board) {
-		
 		/*if (plan.size() == 0 || !board.freeSpaces.contains(plan.get(0)) || board.holding != 0) {
 			for (int i = 0; i < 6; i++) {
 				DFS (board, i);
