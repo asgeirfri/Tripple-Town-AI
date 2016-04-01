@@ -28,44 +28,44 @@ public class TripleTownUI extends JFrame {
 	
 	private String whichImage(int n) {
 		if(n == 1) {
-			return "/img/grass.png";
+			return "img/grass.png";
 		}
 		if(n == 2) {
-			return "/img/bush.png";
+			return "img/bush.png";
 		}
 		if(n == 3) {
-			return "/img/tree.png";
+			return "img/tree.png";
 		}
 		if(n == 4) {
-			return "/img/house1.png";
+			return "img/house1.png";
 		}
 		if(n == 5) {
-			return "/img/house2.png";
+			return "img/house2.png";
 		}
 		if(n == 6) {
-			return "/img/house3.png";
+			return "img/house3.png";
 		}
 		if(n == 7) {
-			return "/img/house4.png";
+			return "img/house4.png";
 		}
 		if(n == 8) {
-			return "/img/house5.png";
+			return "img/house5.png";
 		}
 		
 		if(n == -1) {
-			return "/img/bear.png";
+			return "img/bear.png";
 		}
 		if(n == -2) {
-			return "/img/grave.png";
+			return "img/grave.png";
 		}
 		if(n == -3) {
-			return "/img/church.png";
+			return "img/church.png";
 		}
 		if(n == -4) {
-			return "/img/cathedral.png";
+			return "img/cathedral.png";
 		}
 		if(n == -5) {
-			return "/img/asgeir.png";
+			return "img/asgeir.png";
 		}
 		return "";
 	}
