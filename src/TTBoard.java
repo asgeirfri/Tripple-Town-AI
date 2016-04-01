@@ -144,13 +144,17 @@ public class TTBoard {
 			Point bear = bears.get(i);
 			boolean kill = killBear(bear);
 			if (kill) {
+				
 				unifyBears(bear);
+				killBears();
+				return;
 			}
 		}
 	}
 	
 	//kills bears that are trapped together
 	public boolean killBear(Point bear) {
+		
 		if (bear.x + 1 < 6) {
 			Point temp = new Point(bear.x+1, bear.y);
 			if (board[temp.x][temp.y] == 0) {
@@ -207,20 +211,29 @@ public class TTBoard {
 				}
 			}
 		}
-		bears.remove(bear);
-		board[bear.x][bear.y] = -2;
+		//bears.remove(bear);
+		//board[bear.x][bear.y] = -2;
 		return true;
 	}
 	
 	//unifies toobstones (-2) into churches (-3) and so on
 	public void unifyBears(Point move) {
 		ArrayList<Point> connections = countConnections(move);
+		if (board[move.x][move.y] == -1) {
+			points += connections.size() * -board[move.x][move.y];
+			for (Point p : connections) {
+				board[p.x][p.y] = -2;
+				bears.remove(p);
+			}
+			unifyBears(move);
+			return;
+		}
 		if (connections.size() > 2) {
 			points += connections.size() * -board[move.x][move.y];
 			int newScore = board[move.x][move.y] - 1;
 			for (int i = 0; i < connections.size(); i++) {
 				Point temp = connections.get(i);
-				bears.remove(temp);
+				//bears.remove(temp);
 				board[temp.x][temp.y] = 0;
 			}
 			board[move.x][move.y] = newScore;

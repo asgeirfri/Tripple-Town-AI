@@ -42,7 +42,9 @@ public class TTAgent {
 		}
 		return move;*/
 		if (plan.size() == 0 || !board.freeSpaces.contains(plan.get(0)) || board.holding != 0) {
-			DFS (board, 5);
+			for (int i = 0; i < 5; i++) {
+			DFS (board, i);
+			}
 		}
 		Point p = plan.get(0);
 		plan.remove(0);
