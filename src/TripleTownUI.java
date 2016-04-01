@@ -301,6 +301,7 @@ public class TripleTownUI extends JFrame {
 	}
 	
 	private void stashActionPerformed(ActionEvent e) {
+		stash.setText("");
 		myboard.stash();
 		updateButtons();
 	}

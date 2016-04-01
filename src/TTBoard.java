@@ -84,58 +84,88 @@ public class TTBoard {
 		holding = findHolding();
 	}
 	
-	// moves bears and checks if they die
-	public void moveBears() {
-		Random rand = new Random();
-		for (int i = 0; i < bears.size(); i++) {
-			Point currentBear = bears.get(i);
-			int move = rand.nextInt(4);
-			//bear moves down
-			if ( move == 0) {
-				Point newBearSlot = new Point (currentBear.x+1, currentBear.y);
-				if (freeSpaces.contains(newBearSlot)) {
-					bears.set(i, newBearSlot);
-					int temp = freeSpaces.indexOf(newBearSlot);
-					freeSpaces.set(temp, currentBear);
-					board[currentBear.x][currentBear.y] = 0;
-					board[newBearSlot.x][newBearSlot.y] = -1;
-				}
-			}
-			//bear moves right
-			else if ( move == 1) {
-				Point newBearSlot = new Point (currentBear.x, currentBear.y+1);
-				if (freeSpaces.contains(newBearSlot)) {
-					bears.set(i, newBearSlot);
-					int temp = freeSpaces.indexOf(newBearSlot);
-					freeSpaces.set(temp, currentBear);
-					board[currentBear.x][currentBear.y] = 0;
-					board[newBearSlot.x][newBearSlot.y] = -1;
-				}
-			}
-			//bear moves up
-			else if ( move == 2) {
-				Point newBearSlot = new Point (currentBear.x-1, currentBear.y);
-				if (freeSpaces.contains(newBearSlot)) {
-					bears.set(i, newBearSlot);
-					int temp = freeSpaces.indexOf(newBearSlot);
-					freeSpaces.set(temp, currentBear);
-					board[currentBear.x][currentBear.y] = 0;
-					board[newBearSlot.x][newBearSlot.y] = -1;
-				}
-			}
-			//bear moves left
-			else {
-				Point newBearSlot = new Point (currentBear.x, currentBear.y-1);
-				if (freeSpaces.contains(newBearSlot)) {
-					bears.set(i, newBearSlot);
-					int temp = freeSpaces.indexOf(newBearSlot);
-					freeSpaces.set(temp, currentBear);
-					board[currentBear.x][currentBear.y] = 0;
-					board[newBearSlot.x][newBearSlot.y] = -1;
-				}
+	// Return true if bear can move in direction move
+	public boolean validateBearMove (Point bear, int move) {
+		if ( move == 0) {
+			Point newBearSlot = new Point (bear.x+1, bear.y);
+			if (freeSpaces.contains(newBearSlot)) {
+				return true;
 			}
 		}
+		//bear moves right
+		else if ( move == 1) {
+			Point newBearSlot = new Point (bear.x, bear.y+1);
+			if (freeSpaces.contains(newBearSlot)) {
+				return true;
+			}
+		}
+		//bear moves up
+		else if ( move == 2) {
+			Point newBearSlot = new Point (bear.x-1, bear.y);
+			if (freeSpaces.contains(newBearSlot)) {
+				return true;
+			}
+		}
+		//bear moves left
+		else {
+			Point newBearSlot = new Point (bear.x, bear.y-1);
+			if (freeSpaces.contains(newBearSlot)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// moves bears and checks if they die
+	public void moveBears() {
 		killBears();
+		Random rand = new Random();
+		ArrayList<Point> unmovedBears = new ArrayList<Point>(bears);
+		int i = 0;
+		while (unmovedBears.size() != 0) {
+			Point currentBear = unmovedBears.get(i);
+			int move = rand.nextInt(4);
+			int attempts = 0;
+			// if we can't move, we attempt another move up to 4 times
+			while (!validateBearMove(currentBear, move) && attempts < 4) {
+				move = (move + 1) % 4;
+				attempts++;
+			}
+			// if we tried all, we try again later
+			if (attempts == 4) {
+				//Point tempBear = unmovedBears.get(0);
+				unmovedBears.remove(0);
+				/*unmovedBears.add(tempBear);
+				if (unmovedBears.get(0).equals(tempBear)) {
+					return;
+				}*/
+			} else {
+				Point newBearSlot;
+				//bear moves down
+				if ( move == 0) {
+					newBearSlot = new Point (currentBear.x+1, currentBear.y);
+				}
+				//bear moves right
+				else if ( move == 1) {
+					newBearSlot = new Point (currentBear.x, currentBear.y+1);
+				}
+				//bear moves up
+				else if ( move == 2) {
+					newBearSlot = new Point (currentBear.x-1, currentBear.y);
+				}
+				//bear moves left
+				else {
+					newBearSlot = new Point (currentBear.x, currentBear.y-1);
+				}
+				int bearIndex = bears.indexOf(currentBear);
+				bears.set(bearIndex, newBearSlot);
+				int freeSpacesIndex = freeSpaces.indexOf(newBearSlot);
+				freeSpaces.set(freeSpacesIndex, currentBear);
+				board[currentBear.x][currentBear.y] = 0;
+				board[newBearSlot.x][newBearSlot.y] = -1;
+				unmovedBears.remove(0);
+			}
+		}
 	}
 	
 	//kills all bears that should be killed and unifies them
@@ -143,8 +173,7 @@ public class TTBoard {
 		for (int i = bears.size() -1; i >= 0; i--) {
 			Point bear = bears.get(i);
 			boolean kill = killBear(bear);
-			if (kill) {
-				
+			if (kill) {	
 				unifyBears(bear);
 				killBears();
 				return;
@@ -152,7 +181,7 @@ public class TTBoard {
 		}
 	}
 	
-	//kills bears that are trapped together
+	// Returns True If Bear Should be Killed
 	public boolean killBear(Point bear) {
 		
 		if (bear.x + 1 < 6) {
@@ -211,8 +240,6 @@ public class TTBoard {
 				}
 			}
 		}
-		//bears.remove(bear);
-		//board[bear.x][bear.y] = -2;
 		return true;
 	}
 	
