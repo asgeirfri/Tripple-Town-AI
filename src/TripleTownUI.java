@@ -128,6 +128,13 @@ public class TripleTownUI extends JFrame {
 		
 		int score = myboard.points;
 		scoreLabel.setText("Score: " + score);
+		
+		int stashnumber = myboard.stash;
+		String imgPath2 = whichImage(stashnumber);
+		Image stashImg = new ImageIcon(getClass().getResource(imgPath2)).getImage();
+		Image newImg2 = stashImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		stash.setIcon(new ImageIcon(newImg2));
+		
 		System.out.println("You're currently holding: " + hold);
 		System.out.println("Your current score: " + score + "\n");
 	}
@@ -293,6 +300,11 @@ public class TripleTownUI extends JFrame {
 		play(5,5,button55);
 	}
 	
+	private void stashActionPerformed(ActionEvent e) {
+		myboard.stash();
+		updateButtons();
+	}
+	
 	private void StartButtonActionPerformed(ActionEvent e) {
 		agentPlay();
 	}
@@ -309,6 +321,8 @@ public class TripleTownUI extends JFrame {
 		holdingLabel.setHorizontalTextPosition(JLabel.LEFT);
 		scoreLabel = new JLabel();
 		StartButton = new JButton();
+		
+		stash = new JButton();
 		
 		button00 = new JButton();
 		button01 = new JButton();
@@ -644,6 +658,15 @@ public class TripleTownUI extends JFrame {
 			}
 		});
 		
+		stash.setText("Stash");
+		//---- stash ----
+		stash.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				stashActionPerformed(e);
+			}
+		});
+		
 		//---- StartButton ----
 		StartButton.addActionListener(new ActionListener() {
 			@Override
@@ -662,8 +685,9 @@ public class TripleTownUI extends JFrame {
 					.addContainerGap()
 					.addGroup(contentPaneLayout.createParallelGroup()
 						.addGroup(contentPaneLayout.createSequentialGroup()
-							.addComponent(holdingLabel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
-							.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE,80, GroupLayout.PREFERRED_SIZE))
+							.addComponent(holdingLabel, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE)
+							.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE,180, GroupLayout.PREFERRED_SIZE)
+							.addComponent(stash, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE))
 						.addGroup(contentPaneLayout.createSequentialGroup()
 							.addComponent(button00, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -744,6 +768,7 @@ public class TripleTownUI extends JFrame {
 					.addContainerGap()
 					.addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(holdingLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(stash, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 						.addComponent(scoreLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap()
 					.addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -807,6 +832,8 @@ public class TripleTownUI extends JFrame {
 	private JLabel holdingLabel;
 	private JLabel scoreLabel;
 	public JButton StartButton;
+	
+	private JButton stash;
 	
 	private JButton button00;
 	private JButton button01;
