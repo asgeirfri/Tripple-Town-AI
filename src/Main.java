@@ -2,18 +2,19 @@ import java.awt.Point;
 
 public class Main {
 	
-	public static TripleTownUI board = new TripleTownUI();
+	
 	
 	public static void main(String[] args){
-		HumanGame();
-		//AIGame();
+		//HumanGame();
+		AIGame();
 
 	}
 	
 	public static void AIGame() {
-		TTAgent agent = new TTAgent();
+		TripleTownUI boardUI = new TripleTownUI();
 		TTBoard board = new TTBoard();
 		board.init();
+<<<<<<< HEAD
 		board.show();
 		while (!board.gameOver()) {
 			/*if (agent.stash()) {
@@ -33,11 +34,22 @@ public class Main {
 			System.out.println("------------------");
 			board.show();
 			
+=======
+		if(boardUI.isVisible() == false) {
+			boardUI.setVisible(true);
+		}
+		
+		while(!board.gameOver()) {
+			boardUI.StartButton.doClick();
+>>>>>>> f2db0b223653e1df0da1a708f08ac9e79c356f36
 		}
 	}
 	public static void HumanGame() {
-		if(board.isVisible() == false) {
-			board.setVisible(true);
+		TripleTownUI boardUI = new TripleTownUI();
+		TTBoard board = new TTBoard();
+		board.init();
+		if(boardUI.isVisible() == false) {
+			boardUI.setVisible(true);
 		}
 	}
 }
