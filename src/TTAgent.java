@@ -11,7 +11,43 @@ public class TTAgent {
 		time = t;
 	}
 	
-	public Point nextMove(TTBoard board) {
+	public Point nextMoveBrute(TTBoard board) {
+		
+		
+		int maxScore = 0;
+		Point move = new Point(0,0);
+		
+		// Tracking Scores For Each Possible Play
+		ArrayList<Integer> scores = new ArrayList<Integer>();
+		for (Point p : board.freeSpaces) {
+			scores.add(0);
+		}
+		
+		// Run Predictions
+		for (Point p : board.freeSpaces) {
+			// This Code Is Run For Each Possible Move
+			
+			int index = board.freeSpaces.indexOf(p);
+			
+			for (int i = 0; i < 2000; i++) {
+				int score = scores.get(index);
+				int simulateScore = completeGameWithMove(p, board);
+				scores.set(index, score + simulateScore);
+			}
+		}
+		
+		// Select Move Based On Predictions
+		for (int i = 0; i < scores.size(); i++) {
+			int score = scores.get(i);
+			if (score > maxScore) {
+				maxScore = score;
+				move = board.freeSpaces.get(i);
+			}
+		}
+		return move;
+	}
+	
+	public Point nextMoveUDB(TTBoard board) {
 		
 		// Stat Tracking
 		int totalRuns = 0;

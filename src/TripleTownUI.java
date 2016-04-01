@@ -145,13 +145,24 @@ public class TripleTownUI extends JFrame {
 	}
 	
 	private void agentPlay() {
+		
+		// ------------------
+		//  AI Search Method Trigger
+		// ------------------
+		int ai = 0;
 		//while (!myboard.gameOver()) {
 			/*if (agent.stash()) {
 				board.stash();
 			}
 			else {*/
 			try {
-				Point move = agent.nextMove(myboard);
+				Point move;
+				if(ai == 0){
+					move = agent.nextMoveBrute(myboard);
+				} else {
+
+					move = agent.nextMoveUDB(myboard);
+				}
 				System.out.println("Making move " + move);
 				myboard.playerMove(move);
 				myboard.moveBears();
