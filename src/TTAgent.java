@@ -15,42 +15,31 @@ public class TTAgent {
 	}
 	
 	public Point nextMove(TTBoard board) {
-		/*if (plan.size() == 0 || !board.freeSpaces.contains(plan.get(0)) || board.holding != 0) {
-			for (int i = 0; i < 6; i++) {
-				DFS (board, i);
-			}
-		}
-		Point p = plan.get(0);
-		plan.remove(0);
-		return  p;*/
+		
+		
 		int maxScore = 0;
 		Point move = new Point(0,0);
 		
+		// Tracking Scores For Each Possible Play
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		for (Point p : board.freeSpaces) {
 			scores.add(0);
 		}
 		
-		Double meanTime = 0.0;
+		// Run Predictions
 		for (Point p : board.freeSpaces) {
+			// This Code Is Run For Each Possible Move
+			
 			int index = board.freeSpaces.indexOf(p);
-			Stopwatch s = new Stopwatch();
-			for (int i = 0; i < 10000; i++) {
+			
+			for (int i = 0; i < 100; i++) {
 				int score = scores.get(index);
 				int simulateScore = completeGameWithMove(p, board);
 				scores.set(index, score + simulateScore);
-				// Comment out if we want to use mean
-				/*if (simulateScore > maxScore) {
-					maxScore = simulateScore;
-					move = p;
-					System.out.println("new highest : " + maxScore);
-				}*/
 			}
-			meanTime += s.elapsedTime();
 		}
 		
-		System.out.println("Simulation mean run time for " + board.freeSpaces.size() + " moves: " + meanTime/board.freeSpaces.size());
-		// UNcomment if we want to use mean
+		// Select Move Based On Predictions
 		for (int i = 0; i < scores.size(); i++) {
 			int score = scores.get(i);
 			if (score > maxScore) {
@@ -62,6 +51,7 @@ public class TTAgent {
 	}
 	
 	public int completeGameWithMove(Point p, TTBoard b) {
+		
 		// Create a mock game with same stats
 		TTBoard gameSimulation = new TTBoard();
 		gameSimulation.board = new int[6][6];
