@@ -163,15 +163,20 @@ public class TripleTownUI extends JFrame {
 			}
 			else {*/
 			try {
-				Point move;
+				MoveInstructions move = new MoveInstructions("n", new Point(0,0));
 				if(ai == 0){
 					move = agent.nextMoveBrute(myboard);
 				} else {
 
-					move = agent.nextMoveUDB(myboard);
+					//move = agent.nextMoveUDB(myboard);
 				}
-				System.out.println("Making move " + move);
-				myboard.playerMove(move);
+				System.out.println("Making move " + move.move);
+				if (move.stash.equals("y")) {
+					myboard.stash();
+					updateButtons();
+					stash.setText("");
+				}
+				myboard.playerMove(move.move);
 				myboard.moveBears();
 				
 			}
