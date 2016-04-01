@@ -120,8 +120,12 @@ public class TripleTownUI extends JFrame {
 		button55.setIcon(new ImageIcon(scaleImg(myboard.board[5][5])));
 		
 		int hold = myboard.holding;
+		String imgPath = whichImage(hold);
+		Image holdingImg = new ImageIcon(getClass().getResource(imgPath)).getImage();
+		Image newImg = holdingImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		holdingLabel.setIcon(new ImageIcon(newImg));
+		
 		int score = myboard.points;
-		holdingLabel.setText("Holding: " + hold);
 		scoreLabel.setText("Score: " + score);
 		System.out.println("You're currently holding: " + hold);
 		System.out.println("Your current score: " + score + "\n");
@@ -258,7 +262,12 @@ public class TripleTownUI extends JFrame {
 		// Generated using JFormDesigner Evaluation license - Bradley Chelsey
 		//buttonStash = new JButton();
 		
-		holdingLabel = new JLabel();
+		int hold = myboard.holding;
+		String imgPath = whichImage(hold);
+		Image holdingImg = new ImageIcon(getClass().getResource(imgPath)).getImage();
+		Image newImg = holdingImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+		holdingLabel = new JLabel("Holding", new ImageIcon(newImg), JLabel.LEFT);
+		holdingLabel.setHorizontalTextPosition(JLabel.LEFT);
 		scoreLabel = new JLabel();
 		
 		button00 = new JButton();
