@@ -2,9 +2,9 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TTAgent {
-	int MAXDEPTH = 6;
-	int ITERATIONS = 10000;
+public class MCTSHP {
+	int MAXDEPTH = 5;
+	int ITERATIONS = 100;
 	int time = 0;
 	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
@@ -16,7 +16,7 @@ public class TTAgent {
 	public MoveInstructions nextMove(TTBoard board) {
 		
 		
-		int maxScore = -50000000;
+		int maxScore = -500000000;
 		MoveInstructions move = new MoveInstructions("n", new Point (0,0));
 		
 		// Tracking Scores For Each Possible Play
@@ -101,6 +101,8 @@ public class TTAgent {
 		return completeGame(gameSimulation);
 	}
 	
+	
+	
 	// Complete game after you stash
 	public int completeGameWithStashAndMove(Point p, TTBoard b) {
 		// Create a mock game with same stats
@@ -124,8 +126,77 @@ public class TTAgent {
 		return completeGame(gameSimulation);
 	}
 	
+	
+	public TTBoard doOneMoveToBoard(Point p, TTBoard b) {
+		
+		TTBoard gameSimulation = new TTBoard();
+		gameSimulation.freeSpaces = new ArrayList<Point>(b.freeSpaces);
+		gameSimulation.bears = new ArrayList<Point>(b.bears);
+		gameSimulation.stash = b.stash;
+		gameSimulation.holding = b.holding;
+		gameSimulation.points = b.points;
+		gameSimulation.playerMove(p);
+		gameSimulation.moveBears();
+		
+		return gameSimulation;
+	}
+	
+	
+	
 	public int completeGame (TTBoard gameSimulation) {
 		// Complete mock game
+		int i = 0;
+		while (!gameSimulation.gameOver()) {
+			
+			
+			// TODO: Implement completeGame as a decider on next move
+			ArrayList<ValuedPoint> bestMoves = new ArrayList<ValuedPoint>();
+			for(int j = 0; j < 3; j++){
+				bestMoves.add(new ValuedPoint(0, new Point(0,0)));
+			}
+			
+			for(Point p : gameSimulation.freeSpaces){
+
+				TTBoard temp = doOneMoveToBoard(p,gameSimulation);
+				int value = completeGameShort(temp);
+				if(value > bestMoves.get(0).value){
+					bestMoves.set(0, new ValuedPoint(0, p));
+				} else if(value > bestMoves.get(1).value){
+					bestMoves.set(0, new ValuedPoint(1, p));					
+				} else if(value > bestMoves.get(2).value){
+					bestMoves.set(0, new ValuedPoint(2, p));					
+				}
+			}
+			
+			
+			// Þetta er vandamál
+			int size = gameSimulation.freeSpaces.size();
+			if(size > 3){
+				size = 3;
+			}
+			Point move = bestMoves.get(rand.nextInt(size)).point;
+			
+			if (rand.nextInt(MAXDEPTH) == 0) {
+				gameSimulation.stash();
+			}
+			gameSimulation.playerMove(move);
+			gameSimulation.moveBears();
+			i++;
+		}
+		
+		int a = gameSimulation.points;
+		int b = EvaluationHelper.eval(gameSimulation);
+		if (b < 0) {
+			b = 1;
+		}
+		int c = a * b;
+		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
+		return c;
+	}
+	
+	public int completeGameShort (TTBoard gameSimulation) {
+		// Complete mock game
+		
 		int i = 0;
 		while (!gameSimulation.gameOver() && i < MAXDEPTH) {
 			// get a random move from freeSpaces
@@ -137,14 +208,9 @@ public class TTAgent {
 			gameSimulation.moveBears();
 			i++;
 		}
-		int a = gameSimulation.points;
-		int b = EvaluationHelper.eval(gameSimulation);
-		if (b < 0) {
-			b = 1;
-		}
-		int c = a * b;
-		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
-		return c;
+		
+		return EvaluationHelper.eval(gameSimulation);
+		
 	}
 		
 }

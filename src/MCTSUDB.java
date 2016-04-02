@@ -7,7 +7,7 @@ public class MCTSUDB {
 	int MAXDEPTH = 6;
 	Random rand = new Random();
 	
-	public Point nextMoveUDB(TTBoard board) {
+	public Point nextMove(TTBoard board) {
 		// Stat Tracking
 		int totalRuns = 0;
 		Point move = new Point(0,0);

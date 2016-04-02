@@ -9,13 +9,11 @@ import javax.swing.*;
  */
 
 
-
-/**
- * @author Bradley Chelsey
- */
 public class TripleTownUI extends JFrame {
 	TTBoard myboard = new TTBoard();
-	TTAgent agent = new TTAgent();
+	//MCTSUDB agent = new MCTSUDB();
+	MCTSHP agent = new MCTSHP();
+	//TTAgent agent = new TTAgent();
 	
 	public TripleTownUI() {
 		myboard.init();
@@ -165,7 +163,7 @@ public class TripleTownUI extends JFrame {
 			//try {
 				MoveInstructions move = new MoveInstructions("n", new Point(0,0));
 				if(ai == 0){
-					move = agent.nextMoveBrute(myboard);
+					move = agent.nextMove(myboard);
 				} else {
 
 					//move = agent.nextMoveUDB(myboard);
