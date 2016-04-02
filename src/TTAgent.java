@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class TTAgent {
+	int MAXDEPTH = 10;
 	int time = 0;
 	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
@@ -34,7 +35,7 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 2000 / board.freeSpaces.size();
+			int maxIterations = 10000 / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores1.get(index);
 				int simulateScore = completeGameWithMove(p, board);
@@ -47,7 +48,7 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 2000 / board.freeSpaces.size();
+			int maxIterations = 10000 / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores2.get(index);
 				int simulateScore = completeGameWithStashAndMove(p, board);
@@ -204,20 +205,22 @@ public class TTAgent {
 	
 	public int completeGame (TTBoard gameSimulation) {
 		// Complete mock game
-			while (!gameSimulation.gameOver()) {
-				// get a random move from freeSpaces
-				Point move = gameSimulation.freeSpaces.get(rand.nextInt(gameSimulation.freeSpaces.size()));
-				if (rand.nextBoolean()) {
-					gameSimulation.stash();
-				}
-				gameSimulation.playerMove(move);
-				gameSimulation.moveBears();
+		int i = 0;
+		while (!gameSimulation.gameOver() /*&& i < MAXDEPTH*/) {
+			// get a random move from freeSpaces
+			Point move = gameSimulation.freeSpaces.get(rand.nextInt(gameSimulation.freeSpaces.size()));
+			if (rand.nextInt(MAXDEPTH) == 0) {
+				gameSimulation.stash();
 			}
-			int a = gameSimulation.points;
-			int b = EvaluationHelper.eval(gameSimulation);
-			int c = a-b;
-			System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
-			return c;
+			gameSimulation.playerMove(move);
+			gameSimulation.moveBears();
+			i++;
+		}
+		int a = gameSimulation.points;
+		int b = EvaluationHelper.eval(gameSimulation);
+		int c = a;
+		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
+		return c;
 	}
 	
 	public void DFS (TTBoard board, int maxDepth) {
