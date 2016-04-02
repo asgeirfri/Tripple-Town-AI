@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class TTAgent {
 	int MAXDEPTH = 10;
+	int ITERATIONS = 10000;
 	int time = 0;
 	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
@@ -35,7 +36,7 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 10000 / board.freeSpaces.size();
+			int maxIterations = ITERATIONS / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores1.get(index);
 				int simulateScore = completeGameWithMove(p, board);
@@ -48,7 +49,7 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 10000 / board.freeSpaces.size();
+			int maxIterations = ITERATIONS / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores2.get(index);
 				int simulateScore = completeGameWithStashAndMove(p, board);
