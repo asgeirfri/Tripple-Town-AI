@@ -162,7 +162,7 @@ public class TripleTownUI extends JFrame {
 				board.stash();
 			}
 			else {*/
-			try {
+			//try {
 				MoveInstructions move = new MoveInstructions("n", new Point(0,0));
 				if(ai == 0){
 					move = agent.nextMoveBrute(myboard);
@@ -179,10 +179,10 @@ public class TripleTownUI extends JFrame {
 				myboard.playerMove(move.move);
 				myboard.moveBears();
 				
-			}
-			catch (RuntimeException e) {
-				System.out.println("Invalid move.");
-			}
+			//}
+			//catch (RuntimeException e) {
+			//	System.out.println("Invalid move.");
+			//}
 			//}
 			updateButtons();
 		//}

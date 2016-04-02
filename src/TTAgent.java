@@ -14,7 +14,7 @@ public class TTAgent {
 	public MoveInstructions nextMoveBrute(TTBoard board) {
 		
 		
-		int maxScore = 0;
+		int maxScore = -50000000;
 		MoveInstructions move = new MoveInstructions("n", new Point (0,0));
 		
 		// Tracking Scores For Each Possible Play
@@ -34,19 +34,20 @@ public class TTAgent {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 25000 / board.freeSpaces.size();
+			int maxIterations = 2000 / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores1.get(index);
 				int simulateScore = completeGameWithMove(p, board);
 				scores1.set(index, score + simulateScore);
 			}
 		}
+		
 		// Run predictions if you stash
 		for (Point p : board.freeSpaces) {
 			// This Code Is Run For Each Possible Move
 			int index = board.freeSpaces.indexOf(p);
 			// We divide 50000 iterations between all possible moves
-			int maxIterations = 25000 / board.freeSpaces.size();
+			int maxIterations = 2000 / board.freeSpaces.size();
 			for (int i = 0; i < maxIterations; i++) {
 				int score = scores2.get(index);
 				int simulateScore = completeGameWithStashAndMove(p, board);
@@ -206,10 +207,17 @@ public class TTAgent {
 			while (!gameSimulation.gameOver()) {
 				// get a random move from freeSpaces
 				Point move = gameSimulation.freeSpaces.get(rand.nextInt(gameSimulation.freeSpaces.size()));
+				if (rand.nextBoolean()) {
+					gameSimulation.stash();
+				}
 				gameSimulation.playerMove(move);
 				gameSimulation.moveBears();
 			}
-			return gameSimulation.points;
+			int a = gameSimulation.points;
+			int b = EvaluationHelper.eval(gameSimulation);
+			int c = a-b;
+			System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
+			return c;
 	}
 	
 	public void DFS (TTBoard board, int maxDepth) {
