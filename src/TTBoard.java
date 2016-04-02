@@ -9,31 +9,24 @@ public class TTBoard {
 	public int stash;
 	public int holding;
 	public int points;
-	
-	
-	
 	  
 	public void init() {
 		// initialize the board
-		  Random rand = new Random();
-		  bears = new ArrayList<Point>();
+		Random rand = new Random();
+		bears = new ArrayList<Point>();
 		int max = 14;
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 6; j++) {
-				
-				int randomNum2 = rand.nextInt((3 - 1)) + 1;
-				if(max != 0 && randomNum2 == 1)
-				{
-					int temp = findHolding();
-					if(temp == -1)
-					{
+				int randomNum2 = rand.nextInt((4 - 1));
+				if(max != 0 && randomNum2 == 1) {
+					int temp = initializationObject();
+					if(temp == -1) {
 						bears.add(new Point(i, j));
 					}
 					board[i][j] = temp;
 					max--;
 				}
-				else
-				{
+				else {
 					board[i][j] = 0;
 				}
 			}
@@ -45,7 +38,28 @@ public class TTBoard {
 		holding = 1;
 	}
 	
-	
+	public int initializationObject() {
+		Random rand = new Random();
+		int temp = rand.nextInt(100);
+		if (temp < 40) {
+			return 1;
+		}
+		else if (temp < 55) {
+			return 2;
+		}
+		else if (temp < 65) {
+			return -1;
+		}
+		else if (temp < 80) {
+			return 3;
+		}
+		else if(temp < 90) {
+			return 4;
+		}
+		else {
+			return -2;
+		}
+	}
 	
 	// show the board
 	public void show() {
