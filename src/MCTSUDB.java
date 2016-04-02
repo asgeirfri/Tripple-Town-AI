@@ -2,82 +2,91 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TTAgent {
+public class MCTSUDB {
+	
 	int MAXDEPTH = 6;
-	int ITERATIONS = 10000;
-	int time = 0;
-	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
 	
-	public void init(int t) {
-		time = t;
-	}
-	
-	public MoveInstructions nextMoveBrute(TTBoard board) {
-		
-		
-		int maxScore = -50000000;
-		MoveInstructions move = new MoveInstructions("n", new Point (0,0));
+	public Point nextMoveUDB(TTBoard board) {
+		// Stat Tracking
+		int totalRuns = 0;
+		Point move = new Point(0,0);
 		
 		// Tracking Scores For Each Possible Play
-		ArrayList<Integer> scores1 = new ArrayList<Integer>();
+		ArrayList<PredictionStats> stats = new ArrayList<PredictionStats>();
 		for (Point p : board.freeSpaces) {
-			scores1.add(0);
+			stats.add(new PredictionStats(0, 0));
 		}
 		
-		// Tracking Scores For Each Possible Play
-		ArrayList<Integer> scores2 = new ArrayList<Integer>();
-		for (Point p : board.freeSpaces) {
-			scores2.add(0);
-		}
-		
-		// Run Predictions
+		// Run Initial 100 Plays
 		for (Point p : board.freeSpaces) {
 			// This Code Is Run For Each Possible Move
+			
 			int index = board.freeSpaces.indexOf(p);
-			// We divide 50000 iterations between all possible moves
-			int maxIterations = ITERATIONS / board.freeSpaces.size();
-			for (int i = 0; i < maxIterations; i++) {
-				int score = scores1.get(index);
+
+			for (int i = 0; i < 100; i++) {
+				PredictionStats stat = stats.get(index);
 				int simulateScore = completeGameWithMove(p, board);
-				scores1.set(index, score + simulateScore);
+				stat.combinedScore += simulateScore;
+				stat.runs += 1;
+				totalRuns += 1;
+				stats.set(index, stat);
+			}
+			
+		}
+		
+		
+		
+		// UDB1 Equation Without Discount(Sigmoid) Function
+		
+		// Pre-generate Equation Values For All Possible Plays
+		// So We Dont Generate New Values For All  Plays Each Cycle
+		for(PredictionStats s : stats){
+			s.values = UDB1.calculate(s, totalRuns);
+		}
+		
+		
+		for(int i = 0; i < 45000; i++){
+			
+			
+			// Determine The Highest UDB1 Score
+			double max = 0;
+			int maxIndex = -1;
+			for(int j = 0; j < stats.size(); j++){
+				if(max < stats.get(j).values.high){
+					max = stats.get(j).values.high;
+					maxIndex = j;
+				}
+			}
+			
+			PredictionStats stat = stats.get(maxIndex);
+			Point p = board.freeSpaces.get(maxIndex);
+			int simulateScore = completeGameWithMove(p, board);
+			stat.combinedScore += simulateScore;
+			stat.runs += 1;
+			totalRuns += 1;
+			stat.values = UDB1.calculate(stat, totalRuns);
+			stats.set(maxIndex, stat);
+		}
+		
+		// Print Statistics For Initial Plays
+		for (Point p: board.freeSpaces){
+			int i = board.freeSpaces.indexOf(p);
+			System.out.println("Score For Option: " + i);
+			System.out.println("Runs: " + stats.get(i).runs);
+			//System.out.println("Score: " + stats.get(i).combinedScore);
+			System.out.println("Average: " + stats.get(i).averageScore());
+			//System.out.println("UDB - High: " + stats.get(i).values.high + " Low : " + stats.get(i).values.low);
+		}
+		int max = 0;
+		for(int i = 0; i < stats.size(); i++){
+			if(max < stats.get(i).averageScore()){
+				max = i;
 			}
 		}
 		
-		// Run predictions if you stash
-		for (Point p : board.freeSpaces) {
-			// This Code Is Run For Each Possible Move
-			int index = board.freeSpaces.indexOf(p);
-			// We divide 50000 iterations between all possible moves
-			int maxIterations = ITERATIONS / board.freeSpaces.size();
-			for (int i = 0; i < maxIterations; i++) {
-				int score = scores2.get(index);
-				int simulateScore = completeGameWithStashAndMove(p, board);
-				scores2.set(index, score + simulateScore);
-			}
-		}
-		
-		// Select Move Based On Predictions for no stash
-		for (int i = 0; i < scores1.size(); i++) {
-			int score = scores1.get(i);
-			if (score > maxScore) {
-				maxScore = score;
-				move = new MoveInstructions ("n", board.freeSpaces.get(i));
-			}
-		}
-		
-		// See if it's better if you stash
-		for (int i = 0; i < scores2.size(); i++) {
-			int score = scores2.get(i);
-			if (score > maxScore) {
-				maxScore = score;
-				move = new MoveInstructions ("y", board.freeSpaces.get(i));
-			}
-		}
-		return move;
+		return board.freeSpaces.get(max);
 	}
-	
-	
 	
 	public int completeGameWithMove(Point p, TTBoard b) {
 		
@@ -146,5 +155,4 @@ public class TTAgent {
 		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
 		return c;
 	}
-		
 }

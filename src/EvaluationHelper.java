@@ -5,10 +5,34 @@ import java.util.Random;
 public class EvaluationHelper {
 	
 	public static int eval(TTBoard board){
-		return aEval(board); //noStonesAllowed(board) + noGrassAllowed(board); //+ spreadEval(board);
+		return board.freeSpaces.size() * 10 - triEval(board) - noStonesAllowed(board); //noStonesAllowed(board) + noGrassAllowed(board); //+ spreadEval(board);
+	}
+	
+	// Ásgeirs "triangle evaluation"
+	// Tries to divide board into 2 groups and place nevative integers in 1 triangle and positive in the other
+	// It punishes you for having it not the way it wants
+	public  static int triEval(TTBoard board) {
+		int eval = 0;
+		int eval1 = 0;
+		int eval2 = 0;
+		
+		for(int i = 0; i < 6; i++){
+			for(int j = 0; j < i; j++){
+				eval1 += 3 * board.board[i][j];
+			}
+		}
+		for(int i = 0; i < 6; i++){
+			for(int j = 5; j >= i; j--){
+				eval2 += 3 * board.board[i][j];
+			}
+		}
+		//eval = Math.abs(eval1) + Math.abs(eval2);
+		eval = Math.abs(eval1+eval2);
+		return eval;
 	}
 	
 	// Ásgeirs implementation of eval for short term planing
+	// Tries to reward you for grouping together things that belong together
 	public static int aEval(TTBoard board) {
 		int eval = 0;
 		
@@ -259,12 +283,14 @@ public class EvaluationHelper {
 		return eval;
 	}
 	
+	
+	//Punish for toombstone
 	public static int noStonesAllowed(TTBoard board){
 		int max = 0;
 		for(int i = 0; i < 6; i++){
 			for(int j = 0; j < 6; j++){
 				if(board.board[i][j] == -2){
-					max += 10;
+					max += 5;
 				}
 			}
 		}
