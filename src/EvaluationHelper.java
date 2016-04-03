@@ -5,7 +5,7 @@ import java.util.Random;
 public class EvaluationHelper {
 	
 	public static int eval(TTBoard board){
-		return board.freeSpaces.size() * 10 - triEval(board) - noStonesAllowed(board); //noStonesAllowed(board) + noGrassAllowed(board); //+ spreadEval(board);
+		return board.points * (board.freeSpaces.size() * 10 - triEval(board) - noStonesAllowed(board)); //noStonesAllowed(board) + noGrassAllowed(board); //+ spreadEval(board);
 	}
 	
 	// Ásgeirs "triangle evaluation"

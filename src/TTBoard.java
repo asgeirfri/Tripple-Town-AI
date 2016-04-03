@@ -184,10 +184,20 @@ public class TTBoard {
 	
 	//kills all bears that should be killed and unifies them
 	public void killBears () {
+		//System.out.println("KILL");
+		//System.out.println("--------------");
+		//System.out.println("Bears: " + bears.size());
+		/*for(int i = 0; i < 6; i++){
+			for(int j = 0; j < 6; j++){
+				System.out.print(board[i][j] + " ");
+			}
+			System.out.println();
+		}*/
+		
 		for (int i = bears.size() -1; i >= 0; i--) {
 			Point bear = bears.get(i);
 			boolean kill = killBear(bear);
-			if (kill) {	
+			if (kill) {
 				unifyBears(bear);
 				killBears();
 				return;
@@ -197,14 +207,16 @@ public class TTBoard {
 	
 	// Returns True If Bear Should be Killed
 	public boolean killBear(Point bear) {
-		
+		if (board[bear.x][bear.y] != -1) {
+			return false;
+		}
 		if (bear.x + 1 < 6) {
 			Point temp = new Point(bear.x+1, bear.y);
 			if (board[temp.x][temp.y] == 0) {
 				return false;
 			}
 			if (board[temp.x][temp.y] == -1) {
-				board[bear.x][bear.y] = 1;
+				board[bear.x][bear.y] = 50;
 				boolean shouldReturn = killBear(temp);
 				board[bear.x][bear.y] = -1;
 				if (shouldReturn == false) {
@@ -218,7 +230,7 @@ public class TTBoard {
 				return false;
 			}
 			if (board[temp.x][temp.y] == -1) {
-				board[bear.x][bear.y] = 1;
+				board[bear.x][bear.y] = 50;
 				boolean shouldReturn = killBear(temp);
 				board[bear.x][bear.y] = -1;
 				if (shouldReturn == false) {
@@ -232,7 +244,7 @@ public class TTBoard {
 				return false;
 			}
 			if (board[temp.x][temp.y] == -1) {
-				board[bear.x][bear.y] = 1;
+				board[bear.x][bear.y] = 50;
 				boolean shouldReturn = killBear(temp);
 				board[bear.x][bear.y] = -1;
 				if (shouldReturn == false) {
@@ -246,7 +258,7 @@ public class TTBoard {
 				return false;
 			}
 			if (board[temp.x][temp.y] == -1) {
-				board[bear.x][bear.y] = 1;
+				board[bear.x][bear.y] = 50;
 				boolean shouldReturn = killBear(temp);
 				board[bear.x][bear.y] = -1;
 				if (shouldReturn == false) {
@@ -276,6 +288,7 @@ public class TTBoard {
 				Point temp = connections.get(i);
 				//bears.remove(temp);
 				board[temp.x][temp.y] = 0;
+				bears.remove(temp);
 			}
 			board[move.x][move.y] = newScore;
 			findFreeSpaces();

@@ -3,8 +3,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MCTSHP {
-	int MAXDEPTH = 5;
-	int ITERATIONS = 100;
+	int MAXDEPTH = 4;
+	int ITERATIONS = 200;
+	int MAXEVALUATIONS = 3;
 	int time = 0;
 	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
@@ -96,6 +97,7 @@ public class MCTSHP {
 		gameSimulation.holding = b.holding;
 		gameSimulation.points = b.points;
 		gameSimulation.playerMove(p);
+		//System.out.println("crash 1");
 		gameSimulation.moveBears();
 		
 		return completeGame(gameSimulation);
@@ -121,6 +123,7 @@ public class MCTSHP {
 		gameSimulation.points = b.points;
 		gameSimulation.stash();
 		gameSimulation.playerMove(p);
+		//System.out.println("crash 2");
 		gameSimulation.moveBears();
 		
 		return completeGame(gameSimulation);
@@ -136,6 +139,7 @@ public class MCTSHP {
 		gameSimulation.holding = b.holding;
 		gameSimulation.points = b.points;
 		gameSimulation.playerMove(p);
+		//System.out.println("crash 2");
 		gameSimulation.moveBears();
 		
 		return gameSimulation;
@@ -152,19 +156,27 @@ public class MCTSHP {
 			// TODO: Implement completeGame as a decider on next move
 			ArrayList<ValuedPoint> bestMoves = new ArrayList<ValuedPoint>();
 			for(int j = 0; j < 3; j++){
-				bestMoves.add(new ValuedPoint(0, new Point(0,0)));
+				// Geiri has the magic fingers, ekkert að þakka..
+				if (j >= gameSimulation.freeSpaces.size()) {
+					break;
+				}
+				bestMoves.add(new ValuedPoint(0, new Point(gameSimulation.freeSpaces.get(j))));
 			}
 			
+			
+			// Makes monte carlo simulations and picks the best 3
 			for(Point p : gameSimulation.freeSpaces){
-
-				TTBoard temp = doOneMoveToBoard(p,gameSimulation);
-				int value = completeGameShort(temp);
+				int value = 0;
+				for (int janus = 0; janus < MAXEVALUATIONS; janus++) {
+					TTBoard temp = doOneMoveToBoard(p,gameSimulation);
+					value += completeGameShort(temp);
+				}
 				if(value > bestMoves.get(0).value){
-					bestMoves.set(0, new ValuedPoint(0, p));
+					bestMoves.set(0, new ValuedPoint(value, p));
 				} else if(value > bestMoves.get(1).value){
-					bestMoves.set(0, new ValuedPoint(1, p));					
+					bestMoves.set(1, new ValuedPoint(value, p));					
 				} else if(value > bestMoves.get(2).value){
-					bestMoves.set(0, new ValuedPoint(2, p));					
+					bestMoves.set(2, new ValuedPoint(value, p));					
 				}
 			}
 			
@@ -176,22 +188,16 @@ public class MCTSHP {
 			}
 			Point move = bestMoves.get(rand.nextInt(size)).point;
 			
-			if (rand.nextInt(MAXDEPTH) == 0) {
+			/*if (rand.nextInt(MAXDEPTH) == 0) {
 				gameSimulation.stash();
-			}
+			}*/
 			gameSimulation.playerMove(move);
+			//System.out.println("crash 4");
 			gameSimulation.moveBears();
 			i++;
 		}
 		
-		int a = gameSimulation.points;
-		int b = EvaluationHelper.eval(gameSimulation);
-		if (b < 0) {
-			b = 1;
-		}
-		int c = a * b;
-		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
-		return c;
+		return gameSimulation.points;
 	}
 	
 	public int completeGameShort (TTBoard gameSimulation) {
@@ -205,6 +211,7 @@ public class MCTSHP {
 				gameSimulation.stash();
 			}
 			gameSimulation.playerMove(move);
+			//System.out.println("crash 5");
 			gameSimulation.moveBears();
 			i++;
 		}
