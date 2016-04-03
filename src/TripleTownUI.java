@@ -12,8 +12,8 @@ import javax.swing.*;
 public class TripleTownUI extends JFrame {
 	TTBoard myboard = new TTBoard();
 	//MCTSUDB agent = new MCTSUDB();
-	MCTSHP agent = new MCTSHP();
-	//TTAgent agent = new TTAgent();
+	//MCTSHP agent = new MCTSHP();
+	TTAgent agent = new TTAgent();
 	
 	public TripleTownUI() {
 		myboard.init();
@@ -133,8 +133,8 @@ public class TripleTownUI extends JFrame {
 		Image newImg2 = stashImg.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
 		stash.setIcon(new ImageIcon(newImg2));
 		
-		System.out.println("You're currently holding: " + hold);
-		System.out.println("Your current score: " + score + "\n");
+		//System.out.println("You're currently holding: " + hold);
+		//System.out.println("Your current score: " + score + "\n");
 	}
 	
 	private void humanPlay(int x, int y, JButton button) {
@@ -168,7 +168,7 @@ public class TripleTownUI extends JFrame {
 
 					//move = agent.nextMoveUDB(myboard);
 				}
-				System.out.println("Making move " + move.move);
+				//System.out.println("Making move " + move.move);
 				if (move.stash.equals("y")) {
 					myboard.stash();
 					updateButtons();

@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class TTAgent {
 	int MAXDEPTH = 6;
-	int ITERATIONS = 10000;
+	int ITERATIONS = 2000;
 	int time = 0;
 	ArrayList<Point> plan = new ArrayList<Point>();
 	Random rand = new Random();
@@ -127,7 +127,7 @@ public class TTAgent {
 	public int completeGame (TTBoard gameSimulation) {
 		// Complete mock game
 		int i = 0;
-		while (!gameSimulation.gameOver() && i < MAXDEPTH) {
+		while (!gameSimulation.gameOver() /*&& i < MAXDEPTH*/) {
 			// get a random move from freeSpaces
 			Point move = gameSimulation.freeSpaces.get(rand.nextInt(gameSimulation.freeSpaces.size()));
 			if (rand.nextInt(MAXDEPTH) == 0) {
@@ -137,13 +137,8 @@ public class TTAgent {
 			gameSimulation.moveBears();
 			i++;
 		}
-		int a = gameSimulation.points;
-		int b = EvaluationHelper.eval(gameSimulation);
-		if (b < 0) {
-			b = 1;
-		}
-		int c = a * b;
-		System.out.println("Evaluated at : " + a + " - " + b + " = " + c);
+		int c = EvaluationHelper.eval(gameSimulation);
+		//System.out.println("Evaluated at : " + c);
 		return c;
 	}
 		
