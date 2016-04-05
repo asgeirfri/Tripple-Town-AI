@@ -8,10 +8,7 @@ public class Main {
 	
 	public static void main(String[] args){
 		//HumanGame();
-		for (int i = 0; i < 5; i++) {
-			AIGame();
-		}
-
+		AIGame();
 	}
 	
 	public static void AIGame() {
@@ -33,7 +30,7 @@ public class Main {
 		
 	}
 	public static void HumanGame() {
-		TripleTownUI boardUI = new TripleTownUI(0);
+		TripleTownUI boardUI = new TripleTownUI();
 		TTBoard board = new TTBoard();
 		board.init();
 		if(boardUI.isVisible() == false) {
