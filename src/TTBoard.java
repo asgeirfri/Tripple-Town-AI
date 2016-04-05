@@ -86,6 +86,14 @@ public class TTBoard {
 		if (!freeSpaces.contains(move)) {
 			throw new RuntimeException();
 		}
+		if (holding == 20) {
+			int value = makeDiamondMove(move);
+			if (value == 0) {
+				points -= 20;
+				return;
+			}
+			holding = value;
+		}
 		board[move.x][move.y] = holding;
 		if (holding != -1) {
 			points += holding;
@@ -96,6 +104,50 @@ public class TTBoard {
 		}
 		findFreeSpaces();
 		holding = findHolding();
+	}
+	
+	// finds the highest value that a diamond can unite
+	public int makeDiamondMove(Point move) {
+		int max = 0;
+		if (move.x + 1 < 6) {
+			Point temp = new Point(move.x+1, move.y);
+			board[move.x][move.y] = board[temp.x][temp.y];
+			if(countConnections(move).size() > 2) {
+				if (board[move.x][move.y] > max) {
+					max = board[move.x][move.y];
+				}
+			}
+		}
+		if (move.x - 1 > -1) {
+			Point temp = new Point(move.x-1, move.y);
+			board[move.x][move.y] = board[temp.x][temp.y];
+			if(countConnections(move).size() > 2) {
+				if (board[move.x][move.y] > max) {
+					max = board[move.x][move.y];
+				}
+			}
+			
+		}
+		if (move.y + 1 < 6) {
+			Point temp = new Point(move.x, move.y+1);
+			board[move.x][move.y] = board[temp.x][temp.y];
+			if(countConnections(move).size() > 2) {
+				if (board[move.x][move.y] > max) {
+					max = board[move.x][move.y];
+				}
+			}
+		}
+		if (move.y -1 > -1) {
+			Point temp = new Point(move.x, move.y-1);
+			board[move.x][move.y] = board[temp.x][temp.y];
+			if(countConnections(move).size() > 2) {
+				if (board[move.x][move.y] > max) {
+					max = board[move.x][move.y];
+				}
+			}
+		}
+		board[move.x][move.y] = 0;
+		return max;
 	}
 	
 	// Return true if bear can move in direction move
@@ -208,6 +260,7 @@ public class TTBoard {
 	// Returns True If Bear Should be Killed
 	public boolean killBear(Point bear) {
 		if (board[bear.x][bear.y] != -1) {
+			bears.remove(bear);
 			return false;
 		}
 		if (bear.x + 1 < 6) {
@@ -373,14 +426,17 @@ public class TTBoard {
 		if (temp < 66) {
 			return 1;
 		}
-		else if (temp < 81) {
+		else if (temp < 80) {
 			return 2;
 		}
-		else if (temp < 96) {
+		else if (temp < 95) {
 			return -1;
 		}
-		else if (temp < 98) {
+		else if (temp < 97) {
 			return 3;
+		}
+		else if (temp < 98) {
+			return 20;
 		}
 		else {
 			return 4;

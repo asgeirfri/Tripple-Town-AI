@@ -19,12 +19,13 @@ public class Main {
 		}
 		
 		while(!boardUI.myboard.gameOver()) {
-			try {
+			//try {
 				boardUI.StartButton.doClick();
-			}
-			catch (RuntimeException r) {
-				break;
-			}
+			//}
+			//catch (RuntimeException r) {
+				//System.out.println(r.getMessage());
+			//	break;
+			//}
 		}
 		System.out.println(boardUI.myboard.points + "\t");
 		
