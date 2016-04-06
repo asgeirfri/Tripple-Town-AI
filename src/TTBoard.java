@@ -90,6 +90,7 @@ public class TTBoard {
 			int value = makeDiamondMove(move);
 			if (value == 0) {
 				points -= 20;
+				holding = findHolding();
 				return;
 			}
 			holding = value;

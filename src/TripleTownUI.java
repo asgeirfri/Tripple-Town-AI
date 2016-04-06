@@ -26,7 +26,7 @@ public class TripleTownUI extends JFrame {
 	
 	private String whichImage(int n) {
 		if(n == 1) {
-			return "img/crystal.png";
+			return "img/grass.png";
 		}
 		if(n == 2) {
 			return "img/bush.png";
